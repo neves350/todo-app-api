@@ -1,6 +1,7 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, NotFoundException } from '@nestjs/common'
 import type { Filter, Todo } from 'src/common/interfaces/todo.model'
 import { CreateTodoDto } from './dto/create-todo.dto'
+import type { UpdateTodoDto } from './dto/update-todo.dto'
 
 @Injectable()
 export class TodosService {
@@ -26,5 +27,23 @@ export class TodosService {
 
 		this.todos.push(todo)
 		return todo
+	}
+
+	updateTodo(id: string, updateTodoDto: UpdateTodoDto): Todo {
+		let foundTodo = false
+		let updateTodo: Todo
+
+		this.todos = this.todos.map((t) => {
+			if (t.id !== id) return t
+
+			foundTodo = true
+			updateTodo = { ...t, ...updateTodo }
+
+			return updateTodo
+		})
+
+		if (!foundTodo) throw new NotFoundException('Todo not found.')
+
+		return updateTodo!
 	}
 }
