@@ -9,6 +9,7 @@ export class TodosController {
 
 	@Get()
 	getAllTodos(@Query('filter') filter: Filter): TodosResponseDto {
-		return new TodosResponseDto([])
+		const todos = this.todosService.findAllTodos(filter)
+		return new TodosResponseDto(todos)
 	}
 }
