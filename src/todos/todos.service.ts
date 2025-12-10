@@ -17,6 +17,16 @@ export class TodosService {
 		return items
 	}
 
+	findTodoById(id: string): Todo {
+		const todo = this.todos.find((t) => t.id === id)
+
+		if (!todo) {
+			throw new NotFoundException('Todo not found.')
+		}
+
+		return todo
+	}
+
 	newTodo(createdTodoDto: CreateTodoDto): Todo {
 		const todo: Todo = {
 			id: crypto.randomUUID(),
@@ -37,7 +47,7 @@ export class TodosService {
 			if (t.id !== id) return t
 
 			foundTodo = true
-			updateTodo = { ...t, ...updateTodo }
+			updateTodo = { ...t, ...updateTodoDto }
 
 			return updateTodo
 		})
@@ -45,5 +55,9 @@ export class TodosService {
 		if (!foundTodo) throw new NotFoundException('Todo not found.')
 
 		return updateTodo!
+	}
+
+	deleteTodo(id: string): void {
+		this.todos = this.todos.filter((t) => t.id !== id)
 	}
 }
