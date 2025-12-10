@@ -9,13 +9,8 @@ export class TodosService {
 		// Filter the array and show the todos that are not completed
 		let items = this.todos
 
-		if (filter === 'active') {
-			items = items.filter((todo) => !todo.completed)
-		}
-
-		if (filter === 'completed') {
-			items = items.filter((todo) => todo.completed)
-		}
+		if (filter === 'active') items = items.filter((todo) => !todo.completed)
+		if (filter === 'completed') items = items.filter((todo) => todo.completed)
 
 		return items
 	}
