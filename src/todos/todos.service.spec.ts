@@ -1,5 +1,6 @@
 import { Test, type TestingModule } from '@nestjs/testing'
 import { TodosService } from './todos.service'
+import { NotFoundException } from '@nestjs/common'
 
 describe('TodosService', () => {
 	let service: TodosService
@@ -41,5 +42,15 @@ describe('TodosService', () => {
 
 		const result = service.findAllTodos('completed')
 		expect(result).toHaveLength(1)
+	})
+	it('should return todo by id', () => {
+		const todo = service.newTodo({ title: 'Todo 1' })
+		const result = service.findTodoById(todo.id)
+		expect(result).toEqual(todo)
+	})
+	it('should delete todo by id and then findTodoById should throw', () => {
+		const todo = service.newTodo({ title: 'Todo 1' })
+		service.deleteTodo(todo.id)
+		expect(() => service.findTodoById(todo.id)).toThrow(NotFoundException)
 	})
 })
