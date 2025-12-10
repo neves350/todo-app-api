@@ -1,98 +1,200 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Todo App API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A RESTful API for managing todos built with NestJS. This API provides CRUD operations for todo items with filtering capabilities and Swagger documentation.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Technology Stack
 
-## Description
+### Core Framework
+- **NestJS** (v11.0.1) - Progressive Node.js framework for building efficient and scalable server-side applications
+- **TypeScript** (v5.7.3) - Typed superset of JavaScript
+- **Express** (via @nestjs/platform-express) - Web framework
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Key Libraries
+- **@nestjs/swagger** (v11.2.3) - API documentation with Swagger/OpenAPI
+- **class-validator** (v0.14.3) - Validation decorators for DTOs
+- **class-transformer** (v0.5.1) - Object transformation utilities
+- **RxJS** (v7.8.1) - Reactive programming library
 
-## Project setup
+### Development Tools
+- **Biome** (v2.3.8) - Fast formatter and linter
+- **Jest** (v30.0.0) - Testing framework
+- **TypeScript ESLint** - TypeScript linting
 
-```bash
-$ npm install
-```
+## 📋 Features
 
-## Compile and run the project
+- ✅ Create, read, update, and delete todos
+- 🔍 Filter todos by status (all, active, completed)
+- 📝 Input validation using class-validator
+- 📚 Swagger/OpenAPI documentation
+- 🏗️ Modular architecture with NestJS modules
+- 🧪 Test infrastructure with Jest
+
+## 🛠️ Installation
 
 ```bash
-# development
-$ npm run start
+# Install dependencies
+npm install
 
-# watch mode
-$ npm run start:dev
+# Start development server
+npm run start:dev
 
-# production mode
-$ npm run start:prod
+# Build for production
+npm run build
+
+# Start production server
+npm run start:prod
 ```
 
-## Run tests
+## 📖 API Documentation
 
-```bash
-# unit tests
-$ npm run test
+Once the server is running, access the Swagger documentation at:
+- **URL**: `http://localhost:3000/docs`
 
-# e2e tests
-$ npm run test:e2e
+## 🔌 API Routes
 
-# test coverage
-$ npm run test:cov
+### Todos Endpoints
+
+| Method | Route | Description | Query Params |
+|--------|-------|-------------|--------------|
+| `GET` | `/todos` | Get all todos | `filter` (optional): `'all' \| 'active' \| 'completed'` |
+| `GET` | `/todos/:id` | Get a todo by ID | - |
+| `POST` | `/todos` | Create a new todo | - |
+| `PUT` | `/todos/:id` | Update a todo | - |
+| `DELETE` | `/todos/:id` | Delete a todo | - |
+
+### Request/Response Examples
+
+#### Create Todo
+```http
+POST /todos
+Content-Type: application/json
+
+{
+  "title": "Complete the project"
+}
 ```
 
-## Deployment
+#### Update Todo
+```http
+PUT /todos/:id
+Content-Type: application/json
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+{
+  "title": "Updated title",
+  "completed": true
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+#### Get All Todos (with filter)
+```http
+GET /todos?filter=active
+```
 
-## Resources
+## 📊 Application Flow & Architecture
 
-Check out a few resources that may come in handy when working with NestJS:
+```mermaid
+graph TB
+    Client[Client Request] --> Validation[Global ValidationPipe]
+    Validation --> Router[Express Router]
+    
+    Router -->|GET /todos| GetAll[GET /todos<br/>Get All Todos]
+    Router -->|GET /todos/:id| GetOne[GET /todos/:id<br/>Get Todo by ID]
+    Router -->|POST /todos| Create[POST /todos<br/>Create Todo]
+    Router -->|PUT /todos/:id| Update[PUT /todos/:id<br/>Update Todo]
+    Router -->|DELETE /todos/:id| Delete[DELETE /todos/:id<br/>Delete Todo]
+    
+    GetAll --> Controller[TodosController]
+    GetOne --> Controller
+    Create --> Controller
+    Update --> Controller
+    Delete --> Controller
+    
+    Controller --> Service[TodosService]
+    
+    Service -->|findAllTodos| FilterLogic[Filter Logic<br/>all/active/completed]
+    Service -->|findTodoById| FindLogic[Find by ID Logic]
+    Service -->|newTodo| CreateLogic[Create Logic<br/>Generate UUID & Date]
+    Service -->|updateTodo| UpdateLogic[Update Logic<br/>Merge DTO]
+    Service -->|deleteTodo| DeleteLogic[Delete Logic<br/>Filter Array]
+    
+    FilterLogic --> Memory[In-Memory Storage<br/>Todo Array]
+    FindLogic --> Memory
+    CreateLogic --> Memory
+    UpdateLogic --> Memory
+    DeleteLogic --> Memory
+    
+    Memory --> Response[Response]
+    Response --> Client
+    
+    style Client fill:#e1f5ff
+    style Controller fill:#fff4e6
+    style Service fill:#f0f9ff
+    style Memory fill:#ffe6e6
+    style Response fill:#e8f5e9
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## 🏗️ Project Structure
 
-## Support
+```
+src/
+├── app.module.ts          # Root application module
+├── main.ts                # Application entry point
+├── common/
+│   └── interfaces/
+│       └── todo.model.ts  # Todo interface and Filter type
+└── todos/
+    ├── todos.module.ts    # Todos feature module
+    ├── todos.controller.ts # Todos HTTP handlers
+    ├── todos.service.ts   # Todos business logic
+    └── dto/
+        ├── create-todo.dto.ts      # Create todo DTO
+        ├── update-todo.dto.ts      # Update todo DTO
+        └── todos-response.dto.ts   # Response DTO
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## 🔧 Available Scripts
 
-## Stay in touch
+- `npm run build` - Build the application
+- `npm run format` - Format code with Prettier
+- `npm run start` - Start the application
+- `npm run start:dev` - Start in development mode (watch mode)
+- `npm run start:debug` - Start in debug mode
+- `npm run start:prod` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run test` - Run unit tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:cov` - Run tests with coverage
+- `npm run test:e2e` - Run end-to-end tests
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+## 📝 Data Model
 
-## License
+### Todo Interface
+```typescript
+interface Todo {
+  id: string          // UUID
+  title: string       // Todo title
+  completed: boolean  // Completion status
+  createdAt: Date     // Creation timestamp
+}
+```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+### Filter Type
+```typescript
+type Filter = 'all' | 'active' | 'completed'
+```
+
+## 🔒 Validation
+
+- **CreateTodoDto**: Requires `title` (string, min length 1)
+- **UpdateTodoDto**: Optional `title` (string, min length 1) and `completed` (boolean)
+
+All validation is handled automatically by the global `ValidationPipe`.
+
+## 🌐 Default Configuration
+
+- **Port**: 3000 (configurable via `PORT` environment variable)
+- **Documentation**: `/docs`
+
+## 📄 License
+
+UNLICENSED
