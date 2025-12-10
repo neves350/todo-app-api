@@ -8,7 +8,7 @@ import {
 	Put,
 	Query,
 } from '@nestjs/common'
-import type { TodosService } from './todos.service'
+import { TodosService } from './todos.service'
 import type { Filter, Todo } from 'src/common/interfaces/todo.model'
 import { TodosResponseDto } from './dto/todos-response.dto'
 import type { CreateTodoDto } from './dto/create-todo.dto'
