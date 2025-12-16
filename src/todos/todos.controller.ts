@@ -11,8 +11,8 @@ import {
 import { TodosService } from './todos.service'
 import type { Filter, Todo } from 'src/common/interfaces/todo.model'
 import { TodosResponseDto } from './dto/todos-response.dto'
-import type { CreateTodoDto } from './dto/create-todo.dto'
-import type { UpdateTodoDto } from './dto/update-todo.dto'
+import { CreateTodoDto } from './dto/create-todo.dto'
+import { UpdateTodoDto } from './dto/update-todo.dto'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 
 @ApiTags('todos')
@@ -22,35 +22,37 @@ export class TodosController {
 
 	@Get()
 	@ApiOperation({ summary: 'Return a list of todos.' })
-	getAllTodos(@Query('filter') filter: Filter): TodosResponseDto {
-		const todos = this.todosService.findAllTodos(filter)
+	async getAllTodos(
+		@Query('filter') filter: Filter,
+	): Promise<TodosResponseDto> {
+		const todos = await this.todosService.findAllTodos(filter)
 		return new TodosResponseDto(todos)
 	}
 
 	@Get(':id')
 	@ApiOperation({ summary: 'Return a todo by id.' })
-	getTodoById(@Param('id') id: string): Todo {
+	async getTodoById(@Param('id') id: string): Promise<Todo> {
 		return this.todosService.findTodoById(id)
 	}
 
 	@Post()
 	@ApiOperation({ summary: 'Create a new todo.' })
-	createTodo(@Body() createTodoDto: CreateTodoDto): Todo {
+	async createTodo(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
 		return this.todosService.newTodo(createTodoDto)
 	}
 
 	@Put(':id')
 	@ApiOperation({ summary: 'Update a todo.' })
-	updateTodo(
+	async updateTodo(
 		@Param('id') id: string,
 		@Body() updateTodoDto: UpdateTodoDto,
-	): Todo {
+	): Promise<Todo> {
 		return this.todosService.updateTodo(id, updateTodoDto)
 	}
 
 	@Delete(':id')
 	@ApiOperation({ summary: 'Delete a todo.' })
-	deleteTodo(@Param('id') id: string): void {
+	async deleteTodo(@Param('id') id: string): Promise<void> {
 		return this.todosService.deleteTodo(id)
 	}
 }
